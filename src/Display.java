@@ -1,3 +1,9 @@
+/*
+This project is Non-commercial for people who want's to use it for that. You can share it and modify it to what you want.
+Use this License in the file header of every file (so at the top).
+ */
+
+
 import java.awt.*;
 import java.awt.event.*;
 import java.util.Random;
