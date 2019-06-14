@@ -75,18 +75,21 @@ public class Display extends Component implements MouseListener, KeyListener, Mo
 
     }
     private transient Object objectLock = new Object();
+
+    private boolean updateGround = false;
+
     private static int screenWidth = 0;
     @Override
     public void update(final Graphics g) {
         super.update(g);
         if(x > Main.width) {
             screenWidth += Main.width;
-            x = screenWidth;
+            x = 0;
         }
 
-        for(int i = 0; i < (640 * 10); i += 10) {
-            if(x <= (i-screenWidth) || x >= (i+screenWidth)) {
-                g.drawRect(i,500 + new Random().nextInt(5),1,3);
+        for(int i = 0; i < (640 * 2); i += 10) {
+            if(x >= (i-screenWidth) || x <= (i+screenWidth) && updateGround) {
+                g.drawRect(i,500 + new Random().nextInt(50),1,3);
             }
         }
 
