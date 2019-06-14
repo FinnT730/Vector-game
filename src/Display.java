@@ -4,8 +4,11 @@ Use this License in the file header of every file (so at the top).
  */
 
 
+import sun.swing.BakedArrayList;
+
 import java.awt.*;
 import java.awt.event.*;
+import java.util.ArrayList;
 import java.util.Random;
 
 public class Display extends Component implements MouseListener, KeyListener, MouseMotionListener {
@@ -76,22 +79,47 @@ public class Display extends Component implements MouseListener, KeyListener, Mo
     }
     private transient Object objectLock = new Object();
 
+
+
+    ArrayList<int[]> mapGround = new BakedArrayList(640*10);
+
+
     private boolean updateGround = false;
+
+    private boolean mapGen = true;
 
     private static int screenWidth = 0;
     @Override
     public void update(final Graphics g) {
         super.update(g);
+        if(mapGen = true) {
+            /*
+            * Format:
+            * x,y,w,h
+            */
+            mapGround.add(new int[] {0,500,Main.width,10});
+
+
+            mapGround.add(new int[] {150,490,10,10});
+
+            mapGen = false;
+        }
         if(x > Main.width) {
             screenWidth += Main.width;
             x = 0;
+            updateGround = true;
         }
+        updateGround = false;
 
-        for(int i = 0; i < (640 * 2); i += 10) {
-            if(x <= (i-screenWidth) || x >= (i+screenWidth) && (i > screenWidth - x || !updateGround)) {
-                g.drawRect(i,500 + new Random().nextInt(50),1,3);
-            }
-        }
+//        for(int i = 0; i < (640 * 2); i += 10) {
+//            if(x >= (i-screenWidth) || x <= (i+screenWidth) | (i > screenWidth - x || updateGround)) {
+//                g.drawRect(i,500 + new Random().nextInt(50),1,1);
+//            }
+//        }
+
+        mapGround.forEach((a) -> {
+            g.fillRect(a[0],a[1],a[2],a[3]);
+        });
 
         g.fillRect(x,y,10,10);
     }

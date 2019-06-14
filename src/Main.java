@@ -4,9 +4,15 @@ Use this License in the file header of every file (so at the top).
  */
 
 
+import javafx.print.Printer;
+import jdk.internal.org.objectweb.asm.util.TraceMethodVisitor;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.KeyEvent;
+import java.util.concurrent.ConcurrentLinkedQueue;
+import java.util.concurrent.ForkJoinPool;
+import java.util.concurrent.ForkJoinWorkerThread;
 
 public class Main {
 
@@ -29,9 +35,9 @@ public class Main {
         while((frame.getDefaultCloseOperation() != JFrame.EXIT_ON_CLOSE) || KeyEvent.getKeyText('\n') == "Enter") {
 //            System.out.println("Hello World");
             try {
-                thread.sleep(1/60);
+                thread.sleep(1*16); // thread.sleep(1/16);
                 g = display.getGraphics();
-                g.create().setXORMode(Color.YELLOW);
+                g.create();
                 display.update(g);
                 g = null;
             } catch (InterruptedException e) {
