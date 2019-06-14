@@ -88,7 +88,7 @@ public class Display extends Component implements MouseListener, KeyListener, Mo
         }
 
         for(int i = 0; i < (640 * 2); i += 10) {
-            if(x >= (i-screenWidth) || x <= (i+screenWidth) && updateGround) {
+            if(x <= (i-screenWidth) || x >= (i+screenWidth) && (i > screenWidth - x || !updateGround)) {
                 g.drawRect(i,500 + new Random().nextInt(50),1,3);
             }
         }
