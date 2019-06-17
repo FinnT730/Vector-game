@@ -4,6 +4,8 @@ Use this License in the file header of every file (so at the top).
  */
 
 
+import java.awt.*;
+
 public class Level {
 
     public static int levelWidth;
@@ -15,6 +17,13 @@ public class Level {
     Level() {
 
     }
+
+
+    void drawBlock(Graphics g, int x, int y, int w, int h) {
+        g.drawRect(x,y,w,h);
+    }
+
+
 
 
 }

@@ -21,12 +21,11 @@ public class Main {
 
     static Thread thread;
 
-
+    static Display display = new Display();
     public static void main(String[] args) {
         frame.setSize(width,height);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setVisible(true);
-        Display display = new Display();
         frame.addMouseListener(display);
         frame.addKeyListener(display);
         frame.add(display);
@@ -35,9 +34,9 @@ public class Main {
         while((frame.getDefaultCloseOperation() != JFrame.EXIT_ON_CLOSE) || KeyEvent.getKeyText('\n') == "Enter") {
 //            System.out.println("Hello World");
             try {
-                thread.sleep(1*16); // thread.sleep(1/16);
+                thread.sleep(1/16); // thread.sleep(1/16);
                 g = display.getGraphics();
-                g.create();
+//                g.create();
                 display.update(g);
                 g = null;
             } catch (InterruptedException e) {

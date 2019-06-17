@@ -81,16 +81,19 @@ public class Display extends Component implements MouseListener, KeyListener, Mo
 
 
 
-    ArrayList<int[]> mapGround = new BakedArrayList(640*10);
+    ArrayList<int[]> mapGround = new BakedArrayList(Main.width*100);
 
 
     private boolean updateGround = false;
+
+    private static transient final Level level = new Level();
 
     private boolean mapGen = true;
 
     private static int screenWidth = 0;
     @Override
     public void update(final Graphics g) {
+        Random rand = new Random();
         super.update(g);
         if(mapGen = true) {
             /*
@@ -100,7 +103,12 @@ public class Display extends Component implements MouseListener, KeyListener, Mo
             mapGround.add(new int[] {0,500,Main.width,10});
 
 
-            mapGround.add(new int[] {150,490,10,10});
+//            mapGround.add(new int[] {150,490,10,10});
+            for(int i = screenWidth; i < Main.width * 2; i += 10) {
+                if(rand.nextFloat() >= 0.7f) {
+                    mapGround.add(new int[] {x + screenWidth + i,490,10,10});
+                }
+            }
 
             mapGen = false;
         }
@@ -117,10 +125,25 @@ public class Display extends Component implements MouseListener, KeyListener, Mo
 //            }
 //        }
 
-        mapGround.forEach((a) -> {
-            g.fillRect(a[0],a[1],a[2],a[3]);
-        });
+
+//        mapGround.forEach((a) -> {
+////            g.fillRect(a[0],a[1],a[2],a[3]);
+//
+//            level.drawBlock(g,a[0],a[1],a[2],a[3]);
+//
+//        });
+
+        for(int i = screenWidth; i < x + screenWidth; i++) {
+            if (i <= mapGround.size() && rand.nextFloat() >= 0.8f) {
+                int[] a = mapGround.get(i);
+                level.drawBlock(g, a[0], a[1], a[2], a[3]);
+            }
+        }
+
 
         g.fillRect(x,y,10,10);
+
+
+        System.gc();
     }
 }
