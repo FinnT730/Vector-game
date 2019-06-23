@@ -20,7 +20,10 @@ public class Level {
 
 
     void drawBlock(Graphics g, int x, int y, int w, int h) {
-        g.drawRect(x,y,w,h);
+        synchronized (g) {
+            g.drawRect(x,y,w,h);
+        }
+
     }
 
 

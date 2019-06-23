@@ -167,6 +167,9 @@ public class Display extends Component implements MouseListener, KeyListener, Mo
                             g.setColor(new Color(new Random().nextInt(255), new Random().nextInt(255), new Random().nextInt(255)));
                         }
                         level.drawBlock(g, a[0], a[1], a[2], a[3]);
+//                        test: {
+//                            System.out.println("qqq");
+//                        }
                         a = null;
                     }
                 }
