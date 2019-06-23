@@ -8,21 +8,15 @@ Use this License in the file header of every file (so at the top).
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.KeyEvent;
+import java.lang.annotation.Annotation;
 import java.lang.annotation.Native;
+import java.net.URLClassLoader;
 import java.util.concurrent.ConcurrentLinkedQueue;
 import java.util.concurrent.ForkJoinPool;
 import java.util.concurrent.ForkJoinWorkerThread;
 import java.util.concurrent.ThreadFactory;
 
 public class Main {
-    ThreadFactory factory = (ThreadFactory) new ThreadFactory() {
-        @Override
-        public Thread newThread(final Runnable r) {
-            return new Thread();
-        }
-    }.newThread(() -> {
-        System.out.println("aa");
-    });
 
     public static int width = 900, height = 600;
     public static final JFrame frame = new JFrame("Vector Game");
@@ -58,6 +52,11 @@ public class Main {
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
+
+
+
+
+
     }
 
 
