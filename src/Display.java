@@ -153,6 +153,12 @@ public class Display extends Component implements MouseListener, KeyListener, Mo
                 if (i <= mapGround.size() && rand.nextFloat() >= 0.8f) {
                     int[] a = mapGround.get(i);
                     if (i < 2) {
+                        if(this.mapGround.size() > 399) {
+                            mapGround.remove(0);
+                            if(this.mapGround.size() < 400) {
+                                break;
+                            }
+                        }
                         break;
                     } else {
                         if (!updateGround && mapGround.get(i - 1) != a) {
