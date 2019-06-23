@@ -4,7 +4,7 @@ Use this License in the file header of every file (so at the top).
  */
 
 
-import sun.swing.BakedArrayList;
+
 
 import java.awt.*;
 import java.awt.event.*;
@@ -25,17 +25,20 @@ public class Display extends Component implements MouseListener, KeyListener, Mo
     public void keyPressed(final KeyEvent e) {
         if(e.getKeyCode() == 'A') {
             x -= 10;
+            repaint();
         }
         if(e.getKeyCode() == 'S') {
             y += 10;
+            repaint();
         }
         if(e.getKeyCode() == 'W') {
             y -= 10;
+            repaint();
         }
         if(e.getKeyCode() == 'D') {
             x += 10;
+            repaint();
         }
-        repaint();
     }
 
     @Override
@@ -81,18 +84,30 @@ public class Display extends Component implements MouseListener, KeyListener, Mo
 
 
 
-    ArrayList<int[]> mapGround = new BakedArrayList(Main.width*100);
+    ArrayList<int[]> mapGround = new ArrayList<>(Main.width*100);
 
 
     private boolean updateGround = false;
 
-    private static transient final Level level = new Level();
+    private static transient Level level = new Level();
 
     private boolean mapGen = true;
 
     private static int screenWidth = 0;
+
     @Override
-    public void update(final Graphics g) {
+    public void update(Graphics g) {
+//        if(updateGround) {
+//            return;
+//        } else {
+//            if(mapGround.size() > 500) {
+//                updateGround = false;
+//                mapGround.remove(0);
+//                return;
+//            } else {
+//                mapGround.add(0, new int[] {0,0,0,0});
+//            }
+//        }
         Random rand = new Random();
         super.update(g);
         if(mapGen = true) {
@@ -133,17 +148,29 @@ public class Display extends Component implements MouseListener, KeyListener, Mo
 //
 //        });
 
-        for(int i = screenWidth; i < x + screenWidth; i++) {
-            if (i <= mapGround.size() && rand.nextFloat() >= 0.8f) {
-                int[] a = mapGround.get(i);
-                level.drawBlock(g, a[0], a[1], a[2], a[3]);
+        synchronized (g) {
+            for (int i = screenWidth; i < x + screenWidth; i++) {
+                if (i <= mapGround.size() && rand.nextFloat() >= 0.8f) {
+                    int[] a = mapGround.get(i);
+                    if (i < 2) {
+                        break;
+                    } else {
+                        if (!updateGround && mapGround.get(i - 1) != a) {
+                            mapGround.remove(0);
+                        } else {
+                            g.setColor(new Color(new Random().nextInt(255), new Random().nextInt(255), new Random().nextInt(255)));
+                        }
+                        level.drawBlock(g, a[0], a[1], a[2], a[3]);
+                        a = null;
+                    }
+                }
             }
         }
-
 
         g.fillRect(x,y,10,10);
 
 
-        System.gc();
+        rand = null;
+        g = null;
     }
 }
